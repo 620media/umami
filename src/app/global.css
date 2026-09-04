@@ -103,3 +103,41 @@ select:is(:-webkit-autofill, :autofill):focus {
     font-size: 12px;
   }
 }
+
+/* ── 620 Media compact theme ─────────────────────────────────────────────────
+   Densifies the stock Umami UI: smaller metric numbers, tighter cards and
+   gaps, shorter charts, narrower sidebar. Lives here so upstream merges only
+   ever conflict on this one file. */
+
+:root {
+  --gap-default: 0.5rem;
+}
+
+/* Metric tile numbers (Visitors / Visits / Views / …) */
+span.text-4xl {
+  font-size: 1.45rem !important;
+  line-height: 1.2 !important;
+}
+
+/* Headings */
+.text-3xl { font-size: 1.35rem !important; }
+.text-2xl { font-size: 1.15rem !important; }
+.text-xl  { font-size: 1.05rem !important; }
+
+/* Card + section padding */
+.px-6 { padding-inline: 1rem !important; }
+.py-4 { padding-block: 0.6rem !important; }
+.p-6  { padding: 1rem !important; }
+.p-5  { padding: 0.875rem !important; }
+
+/* Vertical rhythm */
+.gap-6 { gap: 0.85rem !important; }
+.gap-4 { gap: 0.5rem !important; }
+
+/* Charts: 400px -> ~280px */
+div:has(> canvas) { height: 280px !important; }
+
+/* Sidebar: 240px -> 200px on desktop */
+@media (min-width: 1024px) {
+  body > .grid[class*='zen-grid'] { grid-template-columns: 200px 1fr !important; }
+}
