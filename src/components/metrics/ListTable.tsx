@@ -7,7 +7,7 @@ import { Empty } from '@/components/common/Empty';
 import { useMessages, useMobile } from '@/components/hooks';
 import { formatLongNumber } from '@/lib/format';
 
-const ITEM_SIZE = 30;
+const ITEM_SIZE = 28;
 
 interface ListData {
   label: string;
@@ -68,14 +68,11 @@ export function ListTable({
 
   return (
     <Column gap>
-      <Grid
-        alignItems="center"
-        justifyContent="space-between"
-        paddingLeft="2"
-        columns={'1fr 100px'}
-      >
-        <Text weight="bold">{title}</Text>
-        <Text weight="bold" align="center">
+      <Grid alignItems="center" justifyContent="space-between" columns={'1fr 60px'}>
+        <Text weight="bold" color="muted" style={{ fontSize: 12, paddingLeft: 8 }}>
+          {title}
+        </Text>
+        <Text weight="bold" color="muted" align="right" style={{ fontSize: 12, paddingRight: 4 }}>
           {metric}
         </Text>
       </Grid>
@@ -110,57 +107,52 @@ const AnimatedRow = ({
 }) => {
   const y = !Number.isNaN(value) ? value : 0;
   const ySpring = useSpring(0, { stiffness: 170, damping: 26 });
-  const widthSpring = useSpring(0, { stiffness: 170, damping: 26 });
   const yText = useTransform(ySpring, n => (formatCount ? formatCount(n) : formatLongNumber(n)));
-  const widthText = useTransform(widthSpring, n => `${n?.toFixed?.(0)}%`);
 
   useEffect(() => {
     if (animate) {
       ySpring.set(y);
-      widthSpring.set(percent);
     } else {
       ySpring.jump(y);
-      widthSpring.jump(percent);
     }
-  }, [y, percent, animate, ySpring, widthSpring]);
+  }, [y, animate, ySpring]);
 
+  // 620: Rybbit-style rows — proportional fill bar behind the label, count on the right
+  void showPercentage;
   return (
     <Grid
-      columns={showPercentage ? '1fr 50px 50px' : '1fr 100px'}
-      paddingLeft="2"
+      columns={'1fr 60px'}
       alignItems="center"
       borderRadius
       gap
       hover={{ backgroundColor: 'surface-sunken' }}
     >
-      <Row alignItems="center">
-        <Text truncate={true} style={{ maxWidth: isPhone ? '200px' : '400px' }}>
+      <Row alignItems="center" position="relative" style={{ minHeight: 26, overflow: 'hidden', borderRadius: 4 }}>
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            left: 0,
+            width: `${Math.max(0, Math.min(100, percent || 0))}%`,
+            background: 'var(--row-fill, rgba(96, 165, 250, 0.18))',
+            borderRadius: 4,
+            transition: 'width 0.4s ease',
+          }}
+        />
+        <Text
+          truncate={true}
+          style={{ maxWidth: isPhone ? '200px' : '400px', position: 'relative', paddingLeft: 8 }}
+        >
           {label}
         </Text>
       </Row>
-      <Row
-        alignItems="center"
-        height="30px"
-        justifyContent={showPercentage ? 'flex-end' : 'center'}
-      >
+      <Row alignItems="center" height="26px" justifyContent="flex-end" style={{ paddingRight: 4 }}>
         {change}
-        <Text weight="bold">
+        <Text weight="bold" title={`${percent?.toFixed?.(0) ?? 0}%`}>
           <AnimatedDiv title={String(value)}>{yText}</AnimatedDiv>
         </Text>
       </Row>
-      {showPercentage && (
-        <Row
-          alignItems="center"
-          justifyContent="flex-start"
-          position="relative"
-          border="left"
-          borderColor="strong"
-          color="muted"
-          paddingLeft="3"
-        >
-          <AnimatedDiv>{widthText}</AnimatedDiv>
-        </Row>
-      )}
     </Grid>
   );
 };

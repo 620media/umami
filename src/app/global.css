@@ -157,9 +157,13 @@ div.bg-surface-base.py-6 {
 body > .grid[class*='zen-grid'] > div:first-child { font-size: 13px; }
 body > .grid[class*='zen-grid'] > div:first-child .min-h-9,
 body > .grid[class*='zen-grid'] > div:first-child a div[class*='min-h'] {
-  min-height: 30px !important;
+  min-height: 26px !important;
 }
-body > .grid[class*='zen-grid'] > div:first-child [class*='gap-2'] { gap: 0.3rem !important; }
+body > .grid[class*='zen-grid'] > div:first-child [class*='gap-2'] { gap: 0.2rem !important; }
+body > .grid[class*='zen-grid'] > div:first-child [class*='gap-1'] { gap: 0.1rem !important; }
 
 /* Change pill on metric tiles: small and inline */
 span.text-4xl + * { font-size: 11px !important; }
+
+/* Metric panels: Rybbit-scale type */
+div.bg-surface-base.py-6 { font-size: 13px; }

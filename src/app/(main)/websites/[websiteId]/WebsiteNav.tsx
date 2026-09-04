@@ -19,8 +19,9 @@ export function WebsiteNav({
 
   return (
     <Column gap="2" marginTop={isCollapsed ? '2' : undefined}>
-      <Link href={renderUrl('/websites', false)} role="button" onClick={onItemClick}>
-        {isCollapsed ? (
+      {/* 620: back button removed — the logo links to /websites */}
+      {isCollapsed && (
+        <Link href={renderUrl('/websites', false)} role="button" onClick={onItemClick}>
           <TooltipTrigger delay={0}>
             <Row
               tabIndex={0}
@@ -34,17 +35,8 @@ export function WebsiteNav({
             </Row>
             <Tooltip placement="right">{t(labels.back)}</Tooltip>
           </TooltipTrigger>
-        ) : (
-          <Row
-            alignItems="center"
-            hover={{ backgroundColor: 'surface-sunken' }}
-            borderRadius
-            minHeight="9"
-          >
-            <IconLabel icon={<ArrowLeft />} label={t(labels.back)} padding />
-          </Row>
-        )}
-      </Link>
+        </Link>
+      )}
       {items.map(({ label: sectionLabel, items: sectionItems }, index) => (
         <Column key={`${sectionLabel}${index}`} gap="1" marginBottom="1">
           {!isCollapsed && (

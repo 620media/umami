@@ -98,9 +98,13 @@ export function SideNav(props: any) {
           flexGrow="1"
         >
           {!isCollapsed && (
-            <IconLabel icon={<Logo />}>
-              <Text weight="bold">620 Media Analytics</Text>
-            </IconLabel>
+            <Link href={renderUrl('/websites', false)} role="button">
+              <IconLabel icon={<Logo />}>
+                <Text weight="bold" wrap="nowrap" style={{ fontSize: 13 }}>
+                  620 Media Analytics
+                </Text>
+              </IconLabel>
+            </Link>
           )}
           <PanelButton />
         </Row>

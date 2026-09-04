@@ -1,6 +1,7 @@
 import { Icon, ListItem, Row, Select, type SelectProps, Text } from '@umami/react-zen';
 import { useEffect, useState } from 'react';
 import { Empty } from '@/components/common/Empty';
+import { Favicon } from '@/components/common/Favicon';
 import {
   useLoginQuery,
   useMessages,
@@ -33,7 +34,7 @@ export function WebsiteSelect({
     { userId: user?.id, teamId },
     { search, pageSize: 100, includeTeams },
   );
-  const listItems: { id: string; name: string }[] = data?.data || [];
+  const listItems: { id: string; name: string; domain?: string }[] = data?.data || [];
 
   useEffect(() => {
     setName(website?.name);
@@ -61,9 +62,13 @@ export function WebsiteSelect({
 
     return (
       <Row alignItems="center" gap>
-        <Icon>
-          <Globe />
-        </Icon>
+        {website?.domain ? (
+          <Favicon domain={website.domain} />
+        ) : (
+          <Icon>
+            <Globe />
+          </Icon>
+        )}
         <Text truncate color={name ? undefined : 'muted'}>
           {value}
         </Text>
@@ -102,9 +107,12 @@ export function WebsiteSelect({
         },
       }}
     >
-      {listItems.map(({ id, name }) => (
+      {listItems.map(({ id, name, domain }) => (
         <ListItem key={id} id={id}>
-          {name}
+          <Row alignItems="center" gap="2">
+            <Favicon domain={domain} />
+            {name}
+          </Row>
         </ListItem>
       ))}
     </Select>
