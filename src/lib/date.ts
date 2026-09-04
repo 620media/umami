@@ -376,7 +376,7 @@ export function generateTimeSeries(
   return timeseries.map(t => {
     const { x, y, d } = lookup.get(t) || {};
 
-    return { x: t, d: d ?? x, y: y ?? null };
+    return { x: t, d: d ?? x, y: y ?? 0 };
   });
 }
 
