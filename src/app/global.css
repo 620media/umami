@@ -141,3 +141,14 @@ div:has(> canvas) { height: 280px !important; }
 @media (min-width: 1024px) {
   body > .grid[class*='zen-grid'] { grid-template-columns: 200px 1fr !important; }
 }
+
+/* Panels (Pages / Sources / Environment / Location …): 520px -> 300px */
+div.bg-surface-base.py-6 {
+  min-height: 300px !important;
+  padding-block: 0.9rem !important;
+}
+
+/* Grid rows wrapping those panels force 570px — let content decide */
+.grid[class*='zen-grid']:has(> .bg-surface-base) {
+  min-height: unset !important;
+}
