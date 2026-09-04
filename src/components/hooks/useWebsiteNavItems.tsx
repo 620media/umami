@@ -10,7 +10,7 @@ import {
   UserPlus,
   Video,
 } from '@/components/icons';
-import { Funnel, Gauge, Lightning, Magnet, Money, Network, Path, Target } from '@/components/svg';
+import { Funnel, Gauge, Gear, Lightning, Magnet, Money, Network, Path, Target } from '@/components/svg';
 import { useMessages } from './useMessages';
 import { useNavigation } from './useNavigation';
 
@@ -158,6 +158,17 @@ export function useWebsiteNavItems(websiteId: string) {
           label: t(labels.attribution),
           icon: <Network />,
           path: renderPath('/attribution'),
+        },
+      ],
+    },
+    {
+      label: t(labels.settings),
+      items: [
+        {
+          id: 'settings',
+          label: 'Property settings',
+          icon: <Gear />,
+          path: renderPath('/settings'),
         },
       ],
     },

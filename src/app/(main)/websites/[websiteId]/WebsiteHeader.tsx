@@ -17,10 +17,12 @@ export function WebsiteHeader({
   const website = useWebsite();
   const { renderUrl, pathname } = useNavigation();
   const isSettings = pathname.endsWith('/settings');
+  // 620: header removed to reclaim vertical space (Property settings lives in the side nav)
+  const hideHeader = true;
 
   const { t, labels } = useMessages();
 
-  if (isSettings) {
+  if (isSettings || hideHeader) {
     return null;
   }
 

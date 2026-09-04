@@ -1,12 +1,9 @@
 'use client';
-import { Icon, Row } from '@umami/react-zen';
+import { Row } from '@umami/react-zen';
 import { useNavigation } from '@/components/hooks';
-import { Slash } from '@/components/icons';
 import { BoardSelect } from '@/components/input/BoardSelect';
 import { LinkSelect } from '@/components/input/LinkSelect';
 import { PixelSelect } from '@/components/input/PixelSelect';
-import { TeamsButton } from '@/components/input/TeamsButton';
-import { WebsiteSelect } from '@/components/input/WebsiteSelect';
 
 export function TopNav() {
   const { websiteId, linkId, pixelId, boardId, teamId, router, renderUrl } = useNavigation();
@@ -17,10 +14,6 @@ export function TopNav() {
     }
 
     router.push(renderUrl(`${basePath}/${value}`, false));
-  };
-
-  const handleWebsiteChange = (value: string | number | null) => {
-    navigateToEntity('/websites', value);
   };
 
   const handleLinkChange = (value: string | number | null) => {
@@ -34,6 +27,12 @@ export function TopNav() {
   const handleBoardChange = (value: string | number | null) => {
     navigateToEntity('/boards', value);
   };
+
+  // 620: teams button removed; the website switcher lives in the side nav.
+  // Only links / pixels / boards still need this bar.
+  if (!linkId && !pixelId && !boardId) {
+    return null;
+  }
 
   return (
     <Row
@@ -49,23 +48,8 @@ export function TopNav() {
       backgroundColor="surface-raised"
     >
       <Row alignItems="center">
-        <TeamsButton />
         {(websiteId || linkId || pixelId || boardId) && (
           <>
-            <Icon size="sm" color="muted" style={{ opacity: 0.7, margin: '0 6px' }}>
-              <Slash />
-            </Icon>
-            {websiteId && (
-              <WebsiteSelect
-                websiteId={websiteId}
-                teamId={teamId}
-                onChange={handleWebsiteChange}
-                buttonProps={{
-                  variant: 'quiet',
-                  style: { minHeight: 40, minWidth: 200, maxWidth: 200 },
-                }}
-              />
-            )}
             {linkId && (
               <LinkSelect
                 linkId={linkId}

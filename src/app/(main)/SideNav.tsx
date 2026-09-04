@@ -24,11 +24,12 @@ import {
   PanelsLeftBottom,
 } from '@/components/icons';
 import { UserButton } from '@/components/input/UserButton';
+import { WebsiteSelect } from '@/components/input/WebsiteSelect';
 import { Logo } from '@/components/svg';
 
 export function SideNav(props: any) {
   const { t, labels } = useMessages();
-  const { pathname, renderUrl, websiteId, teamId } = useNavigation();
+  const { pathname, renderUrl, websiteId, teamId, router } = useNavigation();
   const [isCollapsed] = useGlobalState('sidenav-collapsed', false);
 
   const links = [
@@ -79,7 +80,7 @@ export function SideNav(props: any) {
       minHeight="0"
       margin="2"
       style={{
-        width: isCollapsed ? '60px' : '240px',
+        width: isCollapsed ? '60px' : '208px',
         transition: 'width 0.2s ease-in-out',
         overflow: 'hidden',
       }}
@@ -104,6 +105,24 @@ export function SideNav(props: any) {
           <PanelButton />
         </Row>
       </Row>
+      {/* 620: website switcher lives under the logo (teams button removed) */}
+      {websiteId && !isCollapsed && (
+        <Column paddingX="1" paddingBottom="2" style={{ flexShrink: 0 }}>
+          <WebsiteSelect
+            websiteId={websiteId}
+            teamId={teamId}
+            onChange={value => {
+              if (value) {
+                router.push(renderUrl(`/websites/${value}`, false));
+              }
+            }}
+            buttonProps={{
+              variant: 'outline',
+              style: { width: '100%', justifyContent: 'flex-start' },
+            }}
+          />
+        </Column>
+      )}
       <OverlayScrollArea style={{ flexGrow: 1, minHeight: 0 }}>
         {websiteId ? (
           <WebsiteNav websiteId={websiteId} isCollapsed={isCollapsed} />

@@ -53,7 +53,7 @@ export const MetricCard = ({
       borderRadius
       backgroundColor="surface-base"
       border
-      gap="4"
+      gap="1"
     >
       {showLabel && (
         <Row justifyContent="space-between" alignItems="flex-start">
@@ -72,14 +72,17 @@ export const MetricCard = ({
           )}
         </Row>
       )}
-      <Text size="4xl" weight="bold" wrap="nowrap">
-        <AnimatedDiv title={value?.toString()}>{valueText}</AnimatedDiv>
-      </Text>
-      {showChange && (
-        <ChangeLabel value={change} title={formatValue(change)} reverseColors={reverseColors}>
-          <AnimatedDiv>{pctText}</AnimatedDiv>
-        </ChangeLabel>
-      )}
+      {/* Value and % change share a line to keep the tiles short */}
+      <Row alignItems="center" gap="3" wrap="nowrap">
+        <Text size="4xl" weight="bold" wrap="nowrap">
+          <AnimatedDiv title={value?.toString()}>{valueText}</AnimatedDiv>
+        </Text>
+        {showChange && (
+          <ChangeLabel value={change} title={formatValue(change)} reverseColors={reverseColors}>
+            <AnimatedDiv>{pctText}</AnimatedDiv>
+          </ChangeLabel>
+        )}
+      </Row>
     </Column>
   );
 };

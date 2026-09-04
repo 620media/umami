@@ -139,7 +139,7 @@ div:has(> canvas) { height: 280px !important; }
 
 /* Sidebar: 240px -> 200px on desktop */
 @media (min-width: 1024px) {
-  body > .grid[class*='zen-grid'] { grid-template-columns: 200px 1fr !important; }
+  body > .grid[class*='zen-grid'] { grid-template-columns: 216px 1fr !important; }
 }
 
 /* Panels (Pages / Sources / Environment / Location …): 520px -> 300px */
@@ -152,3 +152,14 @@ div.bg-surface-base.py-6 {
 .grid[class*='zen-grid']:has(> .bg-surface-base) {
   min-height: unset !important;
 }
+
+/* Side nav: smaller type, tighter rows */
+body > .grid[class*='zen-grid'] > div:first-child { font-size: 13px; }
+body > .grid[class*='zen-grid'] > div:first-child .min-h-9,
+body > .grid[class*='zen-grid'] > div:first-child a div[class*='min-h'] {
+  min-height: 30px !important;
+}
+body > .grid[class*='zen-grid'] > div:first-child [class*='gap-2'] { gap: 0.3rem !important; }
+
+/* Change pill on metric tiles: small and inline */
+span.text-4xl + * { font-size: 11px !important; }
