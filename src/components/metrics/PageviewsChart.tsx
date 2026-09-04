@@ -100,7 +100,7 @@ export function PageviewsChart({ data, unit, minDate, maxDate, ...props }: Pagev
       minDate={minDate}
       maxDate={maxDate}
       renderXLabel={renderXLabel}
-      height="400px"
+      height="280px"
     />
   );
 }

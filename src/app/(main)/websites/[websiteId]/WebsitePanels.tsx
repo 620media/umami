@@ -1,11 +1,12 @@
-import { Grid, Heading, Row, Tab, TabList, TabPanel, Tabs } from '@umami/react-zen';
+import { Grid, Row, Tab, TabList, TabPanel, Tabs } from '@umami/react-zen';
 import { GridRow } from '@/components/common/GridRow';
 import { Panel } from '@/components/common/Panel';
-import { useMessages, useMobile } from '@/components/hooks';
+import { useMessages } from '@/components/hooks';
 import { MetricsTable } from '@/components/metrics/MetricsTable';
 import { WeeklyTraffic } from '@/components/metrics/WeeklyTraffic';
 import { WorldMap } from '@/components/metrics/WorldMap';
 
+// 620: panel layout mirrors the Rybbit overview — tabs are the card headers.
 export function WebsitePanels({ websiteId }: { websiteId: string }) {
   const { t, labels } = useMessages();
   const tableProps = {
@@ -15,102 +16,113 @@ export function WebsitePanels({ websiteId }: { websiteId: string }) {
     showMore: true,
     metric: t(labels.visitors),
   };
-  const rowProps = { minHeight: '570px' };
-  const { isMobile } = useMobile();
 
   return (
     <Grid gap="3">
-      <GridRow layout="two" {...rowProps}>
+      <GridRow layout="two">
         <Panel>
-          <Heading size="2xl">{t(labels.pages)}</Heading>
           <Tabs>
             <TabList>
-              <Tab id="path">{t(labels.path)}</Tab>
-              <Tab id="fullPath">{t(labels.url)}</Tab>
-              <Tab id="entry">{t(labels.entry)}</Tab>
-              <Tab id="exit">{t(labels.exit)}</Tab>
-            </TabList>
-            <TabPanel id="path">
-              <MetricsTable type="path" title={t(labels.path)} {...tableProps} />
-            </TabPanel>
-            <TabPanel id="fullPath">
-              <MetricsTable type="fullPath" title={t(labels.url)} {...tableProps} />
-            </TabPanel>
-            <TabPanel id="entry">
-              <MetricsTable type="entry" title={t(labels.path)} {...tableProps} />
-            </TabPanel>
-            <TabPanel id="exit">
-              <MetricsTable type="exit" title={t(labels.path)} {...tableProps} />
-            </TabPanel>
-          </Tabs>
-        </Panel>
-        <Panel>
-          <Heading size="2xl">{t(labels.sources)}</Heading>
-          <Tabs>
-            <TabList>
-              <Tab id="referrer">{t(labels.referrers)}</Tab>
-              <Tab id="channel">{t(labels.channels)}</Tab>
+              <Tab id="referrer">Referrers</Tab>
+              <Tab id="channel">Channels</Tab>
+              <Tab id="utm">UTM</Tab>
             </TabList>
             <TabPanel id="referrer">
-              <MetricsTable type="referrer" title={t(labels.referrer)} {...tableProps} />
+              <MetricsTable type="referrer" title="Referrers" {...tableProps} />
             </TabPanel>
             <TabPanel id="channel">
-              <MetricsTable type="channel" title={t(labels.channel)} {...tableProps} />
+              <MetricsTable type="channel" title="Channels" {...tableProps} />
+            </TabPanel>
+            <TabPanel id="utm">
+              <MetricsTable type="utmSource" title="UTM" {...tableProps} />
+            </TabPanel>
+          </Tabs>
+        </Panel>
+        <Panel>
+          <Tabs>
+            <TabList>
+              <Tab id="path">Pages</Tab>
+              <Tab id="title">Titles</Tab>
+              <Tab id="entry">Entries</Tab>
+              <Tab id="exit">Exits</Tab>
+              <Tab id="hostname">Hostnames</Tab>
+            </TabList>
+            <TabPanel id="path">
+              <MetricsTable type="path" title="Pages" {...tableProps} />
+            </TabPanel>
+            <TabPanel id="title">
+              <MetricsTable type="title" title="Titles" {...tableProps} />
+            </TabPanel>
+            <TabPanel id="entry">
+              <MetricsTable type="entry" title="Entries" {...tableProps} />
+            </TabPanel>
+            <TabPanel id="exit">
+              <MetricsTable type="exit" title="Exits" {...tableProps} />
+            </TabPanel>
+            <TabPanel id="hostname">
+              <MetricsTable type="hostname" title="Hostnames" {...tableProps} />
             </TabPanel>
           </Tabs>
         </Panel>
       </GridRow>
 
-      <GridRow layout="two" {...rowProps}>
+      <GridRow layout="two">
         <Panel>
-          <Heading size="2xl">{t(labels.environment)}</Heading>
           <Tabs>
             <TabList>
-              <Tab id="browser">{t(labels.browsers)}</Tab>
-              <Tab id="os">{t(labels.os)}</Tab>
-              <Tab id="device">{t(labels.devices)}</Tab>
+              <Tab id="browser">Browsers</Tab>
+              <Tab id="device">Devices</Tab>
+              <Tab id="os">Operating Systems</Tab>
+              <Tab id="screen">Screen Dimensions</Tab>
             </TabList>
             <TabPanel id="browser">
-              <MetricsTable type="browser" title={t(labels.browser)} {...tableProps} />
-            </TabPanel>
-            <TabPanel id="os">
-              <MetricsTable type="os" title={t(labels.os)} {...tableProps} />
+              <MetricsTable type="browser" title="Browsers" {...tableProps} />
             </TabPanel>
             <TabPanel id="device">
-              <MetricsTable type="device" title={t(labels.device)} {...tableProps} />
+              <MetricsTable type="device" title="Devices" {...tableProps} />
+            </TabPanel>
+            <TabPanel id="os">
+              <MetricsTable type="os" title="Operating Systems" {...tableProps} />
+            </TabPanel>
+            <TabPanel id="screen">
+              <MetricsTable type="screen" title="Screen Dimensions" {...tableProps} />
             </TabPanel>
           </Tabs>
         </Panel>
 
         <Panel>
-          <Heading size="2xl">{t(labels.location)}</Heading>
           <Tabs>
             <TabList>
-              <Tab id="country">{t(labels.countries)}</Tab>
-              <Tab id="region">{t(labels.regions)}</Tab>
-              <Tab id="city">{t(labels.cities)}</Tab>
+              <Tab id="country">Countries</Tab>
+              <Tab id="region">Regions</Tab>
+              <Tab id="city">Cities</Tab>
+              <Tab id="language">Languages</Tab>
+              <Tab id="map">Map</Tab>
             </TabList>
             <TabPanel id="country">
-              <MetricsTable type="country" title={t(labels.country)} {...tableProps} />
+              <MetricsTable type="country" title="Countries" {...tableProps} />
             </TabPanel>
             <TabPanel id="region">
-              <MetricsTable type="region" title={t(labels.region)} {...tableProps} />
+              <MetricsTable type="region" title="Regions" {...tableProps} />
             </TabPanel>
             <TabPanel id="city">
-              <MetricsTable type="city" title={t(labels.city)} {...tableProps} />
+              <MetricsTable type="city" title="Cities" {...tableProps} />
+            </TabPanel>
+            <TabPanel id="language">
+              <MetricsTable type="language" title="Languages" {...tableProps} />
+            </TabPanel>
+            <TabPanel id="map">
+              <WorldMap websiteId={websiteId} />
             </TabPanel>
           </Tabs>
         </Panel>
       </GridRow>
 
-      <GridRow layout="two-one" {...rowProps}>
-        <Panel paddingX="0" paddingY="0" style={{ gridColumn: isMobile ? 'span 1' : 'span 2' }}>
-          <WorldMap websiteId={websiteId} />
-        </Panel>
-
+      <GridRow layout="two">
         <Panel>
-          <Heading size="2xl">{t(labels.traffic)}</Heading>
-          <Row border="bottom" marginBottom="4" />
+          <Row border="bottom" marginBottom="4" paddingBottom="2">
+            Traffic
+          </Row>
           <WeeklyTraffic websiteId={websiteId} />
         </Panel>
       </GridRow>
